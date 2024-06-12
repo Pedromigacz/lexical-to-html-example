@@ -1,0 +1,24 @@
+---
+import { cn } from '@/utils';
+import type { Node } from '@/RenderLexicalText/RenderBlocks.astro';
+import RenderInlines from 'RenderLexicalText/RenderInlines.astro';
+
+interface Props {
+  Node: Node;
+}
+
+const { Node } = Astro.props;
+---
+
+<p
+  class={cn(
+    'mb-2 xl:pl-6',
+    'text-sm !leading-tall tracking-[0.2px] md:text-base',
+    Node.format === 'left' && 'text-left',
+    Node.format === 'center' && 'text-center',
+    Node.format === 'right' && 'text-right',
+    Node.format === 'justify' && 'text-justify'
+  )}
+>
+  <RenderInlines Node={Node} />
+</p>

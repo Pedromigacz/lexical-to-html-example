@@ -1,0 +1,18 @@
+---
+import type { Image as Image_payload } from '@/fetch_logic/payload-types';
+
+import ArticleImage from '@/ArticleImage.astro';
+import type { Node } from '@/RenderLexicalText/RenderBlocks.astro';
+
+interface Props {
+  Node: Node;
+}
+
+const { Node } = Astro.props;
+---
+
+<ArticleImage
+  image={Node.value as Image_payload}
+  width={(Node.value as Image_payload).width || undefined}
+  height={(Node.value as Image_payload).height || undefined}
+/>

@@ -1,0 +1,17 @@
+---
+interface Props {
+  is: boolean;
+}
+
+const { is } = Astro.props;
+---
+
+{
+  is ? (
+    <span class='inline-block line-through'>
+      <slot />
+    </span>
+  ) : (
+    <slot />
+  )
+}

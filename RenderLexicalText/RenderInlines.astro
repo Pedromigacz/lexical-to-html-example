@@ -1,0 +1,37 @@
+---
+import { cn } from '@/utils';
+import LineBreak from '@/RenderLexicalText/blocks/LineBreak.astro';
+import List from '@/RenderLexicalText/blocks/List.astro';
+import Link from '@/RenderLexicalText/inlines/link.astro';
+import ListItem from '@/RenderLexicalText/inlines/ListItem.astro';
+import type { Node } from '@/RenderLexicalText/RenderBlocks.astro';
+import RenderMarks from '@/RenderLexicalText/RenderMarks.astro';
+
+interface Props {
+  Node: Node;
+}
+
+const { Node } = Astro.props;
+---
+
+{
+  Node.children?.map((node) => {
+    switch (node.type) {
+      case 'autolink':
+        return <Link Node={node} />;
+      case 'link':
+        return <Link Node={node} />;
+      case 'list':
+        return <List Node={node} nested />; // This is a block, but I've not find a way to remove it from here because of nested lists
+      case 'listitem':
+        return <ListItem Node={node} />;
+      case 'linebreak':
+        return <LineBreak />;
+      case 'text':
+        return <RenderMarks Node={node} />;
+
+      default:
+        return <span class='bg-detected'>{JSON.stringify(node.type)}</span>;
+    }
+  })
+}

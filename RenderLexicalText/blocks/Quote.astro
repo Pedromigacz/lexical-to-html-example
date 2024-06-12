@@ -1,0 +1,27 @@
+---
+import { cn } from '@/utils';
+import type { Node } from '@/RenderLexicalText/RenderBlocks.astro';
+import RenderInlines from 'RenderLexicalText/RenderInlines.astro';
+
+interface Props {
+  Node: Node;
+}
+
+const { Node } = Astro.props;
+---
+
+<blockquote
+  class={cn(
+    'bg-[#01D5BF1a] py-1',
+    'xl:ml-6 mb-2',
+    'text-sm !leading-tall tracking-[0.2px] md:text-base rounded-md',
+    Node.format === 'left' && 'text-left',
+    Node.format === 'center' && 'text-center',
+    Node.format === 'right' && 'text-right',
+    Node.format === 'justify' && 'text-justify'
+  )}
+>
+  <div class='ml-11 border-l border-l-free px-4 py-3'>
+    <RenderInlines Node={Node} />
+  </div>
+</blockquote>

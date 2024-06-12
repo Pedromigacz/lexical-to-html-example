@@ -1,0 +1,100 @@
+---
+import { cn } from '@/utils';
+import type { Node } from '@/RenderLexicalText/RenderBlocks.astro';
+import RenderInlines from 'RenderLexicalText/RenderInlines.astro';
+
+interface Props {
+  Node: Node;
+}
+
+const { Node } = Astro.props;
+
+const generic_title = 'xl:pl-6 font-sans font-bold leading-short';
+---
+
+{
+  (() => {
+    switch (Node?.tag) {
+      case 'h1':
+        return (
+          <h2
+            class={cn(
+              generic_title,
+              'md:mb-2 md:mt-9 md:text-[5rem]',
+              'mb-2 mt-6 text-5xl', // mobile styles
+              Node.format === 'left' && 'text-left',
+              Node.format === 'center' && 'text-center',
+              Node.format === 'right' && 'text-right',
+              Node.format === 'justify' && 'text-justify'
+            )}
+          >
+            <RenderInlines Node={Node} />
+          </h2>
+        );
+      case 'h2':
+        return (
+          <h3
+            class={cn(
+              generic_title,
+              'md:mb-2 md:mt-9 md:text-5xl',
+              'mb-2 mt-6 text-3xl', // mobile styles
+              Node.format === 'left' && 'text-left',
+              Node.format === 'center' && 'text-center',
+              Node.format === 'right' && 'text-right',
+              Node.format === 'justify' && 'text-justify'
+            )}
+          >
+            <RenderInlines Node={Node} />
+          </h3>
+        );
+      case 'h3':
+        return (
+          <h4
+            class={cn(
+              generic_title,
+              'md:mb-2 md:mt-4 md:text-3xl',
+              'my-2 text-2xl', // mobile styles
+              Node.format === 'left' && 'text-left',
+              Node.format === 'center' && 'text-center',
+              Node.format === 'right' && 'text-right',
+              Node.format === 'justify' && 'text-justify'
+            )}
+          >
+            <RenderInlines Node={Node} />
+          </h4>
+        );
+      case 'h4':
+        return (
+          <h5
+            class={cn(
+              generic_title,
+              'md:mb-2 md:mt-4 md:text-2xl',
+              'my-2 text-lg', // mobile styles
+              Node.format === 'left' && 'text-left',
+              Node.format === 'center' && 'text-center',
+              Node.format === 'right' && 'text-right',
+              Node.format === 'justify' && 'text-justify'
+            )}
+          >
+            <RenderInlines Node={Node} />
+          </h5>
+        );
+      default:
+        return (
+          <h5
+            class={cn(
+              generic_title,
+              'md:mb-2 md:mt-4 md:text-2xl',
+              'my-2 text-lg', // mobile styles
+              Node.format === 'left' && 'text-left',
+              Node.format === 'center' && 'text-center',
+              Node.format === 'right' && 'text-right',
+              Node.format === 'justify' && 'text-justify'
+            )}
+          >
+            <RenderInlines Node={Node} />
+          </h5>
+        );
+    }
+  })()
+}

@@ -1,0 +1,53 @@
+---
+import Heading from '@/RenderLexicalText/blocks/Heading.astro';
+import HorizontalRule from '@/RenderLexicalText/blocks/HorizontalRule.astro';
+import List from '@/RenderLexicalText/blocks/List.astro';
+import Paragraph from '@/RenderLexicalText/blocks/Paragraph.astro';
+import Quote from '@/RenderLexicalText/blocks/Quote.astro';
+import Upload from '@/RenderLexicalText/blocks/Upload.astro';
+import RenderInlines from 'RenderLexicalText/RenderInlines.astro';
+
+export interface Node {
+  type: string;
+  version: number;
+  children?: Node[];
+  [k: string]: unknown;
+}
+
+interface Root {
+  type: string;
+  children: Node[];
+  direction: ('ltr' | 'rtl') | null;
+  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+  indent: number;
+  version: number;
+}
+
+interface Props {
+  Body?: { root: Root; [k: string]: unknown } | null;
+}
+
+const { Body } = Astro.props;
+---
+
+{
+  Body?.root.children.map((node) => {
+    switch (node.type) {
+      case 'upload':
+        return <Upload Node={node} />;
+      case 'horizontalrule':
+        return <HorizontalRule />;
+      case 'heading':
+        return <Heading Node={node} />;
+      case 'quote':
+        return <Quote Node={node} />;
+      case 'paragraph':
+        return <Paragraph Node={node} />;
+      case 'list':
+        return <List Node={node} />;
+
+      default:
+        return <RenderInlines Node={node} />;
+    }
+  })
+}

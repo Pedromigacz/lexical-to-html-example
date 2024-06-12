@@ -1,0 +1,40 @@
+---
+import Bold from '@/RenderLexicalText/inlines/Bold.astro';
+import Italic from '@/RenderLexicalText/inlines/Italic.astro';
+import LineThrough from '@/RenderLexicalText/inlines/LineThrough.astro';
+import Underline from '@/RenderLexicalText/inlines/Underline.astro';
+import { NodeFormat } from '@/RenderLexicalText/NodeFormat';
+import type { Node } from '@/RenderLexicalText/RenderBlocks.astro';
+import RenderInlines from '@/RenderLexicalText/RenderInlines.astro';
+
+interface Props {
+  Node: Node;
+}
+
+const { Node } = Astro.props;
+
+const mark_format = typeof Node.format === 'number' ? Node.format : 0;
+
+const is_bold = Boolean(mark_format & NodeFormat.IS_BOLD);
+const is_italic = Boolean(mark_format & NodeFormat.IS_ITALIC);
+const is_line_through = Boolean(mark_format & NodeFormat.IS_STRIKETHROUGH);
+const is_underline = Boolean(mark_format & NodeFormat.IS_UNDERLINE);
+
+//     if (node.format & NodeFormat.IS_CODE) {
+//       text = <code>{text}</code>;
+//     }
+//     if (node.format & NodeFormat.IS_SUBSCRIPT) {
+//       text = <sub>{text}</sub>;
+//     }
+//     if (node.format & NodeFormat.IS_SUPERSCRIPT) {
+//       text = <sup>{text}</sup>;
+//     }
+---
+
+<Bold is={is_bold}
+  ><Italic is={is_italic}
+    ><LineThrough is={is_line_through}
+      ><Underline is={is_underline}>{Node.text}</Underline></LineThrough
+    ></Italic
+  ></Bold
+>

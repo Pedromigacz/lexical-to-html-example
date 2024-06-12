@@ -1,0 +1,22 @@
+---
+import RenderInlines from 'RenderLexicalText/RenderInlines.astro';
+
+interface Props {
+  Node: {
+    [k: string]: unknown;
+    type: string;
+    version: number;
+  };
+}
+
+const { Node } = Astro.props;
+---
+
+<a
+  href={String((Node.fields as { url?: string })?.url)}
+  target='_blank'
+  rel='noopener noreferrer'
+  class='text-free underline'
+>
+  <RenderInlines Node={Node} />
+</a>

@@ -1,0 +1,45 @@
+---
+import { cn } from '@/utils';
+import { Checkbox } from '@/ui/checkbox';
+import RenderInlines from 'RenderLexicalText/RenderInlines.astro';
+
+interface Props {
+  Node: {
+    [k: string]: unknown;
+    type: string;
+    version: number;
+  };
+}
+
+const { Node } = Astro.props;
+
+const has_nested_list =
+  Array.isArray(Node.children) &&
+  Node.children?.some((list_item) => list_item.type === 'list');
+---
+
+<li
+  class={cn(
+    'mb-1 text-sm !leading-tall tracking-[0.2px] md:text-base',
+    has_nested_list && 'list-none'
+  )}
+  value={Number(Node.value) || 0}
+>
+  {
+    Node.checked === true ? (
+      <div class='mr-[2px] inline-block h-4 w-4 *:!cursor-text'>
+        <Checkbox checked={true} className='!cursor-text' />
+      </div>
+    ) : null
+  }
+  {
+    Node.checked === false ? (
+      <div class='mr-[2px] inline-block h-4 w-4 *:!cursor-text'>
+        <Checkbox checked={false} className='!cursor-text' />
+      </div>
+    ) : null
+  }
+  <span class={cn(Node.checked === true && 'line-through')}>
+    <RenderInlines Node={Node} />
+  </span>
+</li>

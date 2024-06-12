@@ -1,0 +1,46 @@
+---
+import { cn } from '@/utils';
+import type { Node } from '@/RenderLexicalText/RenderBlocks.astro';
+import RenderInlines from 'RenderLexicalText/RenderInlines.astro';
+
+interface Props {
+  Node: Node;
+  nested?: boolean;
+}
+
+const { Node, nested = false } = Astro.props;
+
+const padding = nested ? 'xl:pl-6' : 'pl-6 xl:pl-12';
+---
+
+{
+  (() => {
+    switch (Node?.listType) {
+      case 'number':
+        return (
+          <ol class={cn('mb-2', 'list-decimal', padding)} role='list'>
+            <RenderInlines Node={Node} />
+          </ol>
+        );
+      case 'bullet':
+        return (
+          <ul class={cn('mb-2', 'list-disc', padding)} role='list'>
+            <RenderInlines Node={Node} />
+          </ul>
+        );
+      case 'check':
+        return (
+          <ul class={cn('mb-2 xl:pl-6')} role='list'>
+            <RenderInlines Node={Node} />
+          </ul>
+        );
+
+      default:
+        return (
+          <ul class={cn('mb-2', 'list-disc', padding)} role='list'>
+            <RenderInlines Node={Node} />
+          </ul>
+        );
+    }
+  })()
+}
